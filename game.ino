@@ -1,14 +1,9 @@
-const int CLOSE  = 0;
-const int OPEN   = 1;
-const int MINE   = 2;
-const int FLAG_F = 3;
-const int FLAG_M = 4;
-const int SELECT = 5; 
+
 
 const int NUM_MINE = 6;
 const int NUM_DOT = 35;
 
-void initField (int (*arrays)[7]) {
+void initField (int (*arrays)[COL]) {
   //最初に選択しているを乱数テーブルから除く
   int table[NUM_DOT-1];
   int selectedDot = coordinateToNum(getSelectedDot(arrays));
@@ -29,10 +24,10 @@ void initField (int (*arrays)[7]) {
   }
 }
 
-int getSelectedDot (int (*arrays)[7]) {
+int getSelectedDot (int (*arrays)[COL]) {
   for (int i=0; i<7; i++) {
     for (int j=0; j<7; j++) {
-      if (arrays[i][j]==SELECT) {
+      if (arrays[i][j]==5) {
         return i*10+j;
       }
     }
