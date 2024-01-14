@@ -1,17 +1,19 @@
 #include "ae7seg.h"
-uint8_t SPEAKER   =  2;
-uint8_t VOLUME    = A2;
-uint8_t BUTTON_A  = A3;
-uint8_t BUTTON_B  = A4;
-uint8_t BUTTON_C  = A5;
-uint8_t SEG_LATCH = A1;
-uint8_t SEG_SDI   =  3;
-uint8_t SEG_SCK   =  4;
-uint8_t REG_SER   = 13;
-uint8_t REG_LATCH = 12;
-uint8_t REG_CLK   = 11;
-uint8_t MAT[] = {-1, 5, 6, 7, 8, 9, 10};
-int field[5][7] = {
+const uint8_t SPEAKER   =  2;
+const uint8_t VOLUME    = A2;
+const uint8_t BUTTON_A  = A3;
+const uint8_t BUTTON_B  = A4;
+const uint8_t BUTTON_C  = A5;
+const uint8_t SEG_LATCH = A1;
+const uint8_t SEG_SDI   =  3;
+const uint8_t SEG_SCK   =  4;
+const uint8_t REG_SER   = 13;
+const uint8_t REG_LATCH = 12;
+const uint8_t REG_CLK   = 11;
+const uint8_t MAT[] = {-1, 5, 6, 7, 8, 9, 10};
+const int ROW = 5;
+const int COL = 7;
+const int field[ROW][COL] = {
   {0,0,0,0,0,0,0},
   {0,0,0,0,0,0,0},
   {0,0,0,5,0,0,0},
