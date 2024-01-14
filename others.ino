@@ -1,0 +1,3 @@
+bool wait (int n) {
+  
+}
