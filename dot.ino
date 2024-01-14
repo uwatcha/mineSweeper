@@ -10,10 +10,25 @@ Dot::Dot(int _row, int _col) {
   isFlag = false;
   row = _row;
   col = _col;
-  numMinesAround = 0;
 }
 
-int Dot::getNumMinesAround(Dot (*arrays)[COL]) {
+int Dot::getNumMinesAround() {
+  return this->numMinesAround;
+}
+
+int Dot::getState() {
+  return this->state;
+}
+
+bool Dot::getIsSelected() {
+  return this->isSelected;
+}
+
+bool Dot::getIsFlag() {
+  return this->isFlag;
+}
+
+void Dot::setNumMinesAround(Dot (*arrays)[COL]) {
   if (this->getState()!=MINE) {
     int result = 0;
     for (int i=-1; i<=1; i++) {
@@ -23,15 +38,15 @@ int Dot::getNumMinesAround(Dot (*arrays)[COL]) {
         }
       }
     }
-    return result;
+    this->numMinesAround = result;
   }
   else {
-    return -1;
+    this->numMinesAround = -1;
   }
 }
 
-int Dot::getState() {
-  return this->state;
+void Dot::setSelect() {
+  this->isSelected = !this->isSelected;
 }
 
 void Dot::setFlag() {

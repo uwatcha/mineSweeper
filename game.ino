@@ -1,5 +1,3 @@
-
-
 const int NUM_MINE = 6;
 const int NUM_DOT = 35;
 
