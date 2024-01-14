@@ -11,12 +11,12 @@ uint8_t REG_SER   = 13;
 uint8_t REG_LATCH = 12;
 uint8_t REG_CLK   = 11;
 uint8_t MAT[] = {-1, 5, 6, 7, 8, 9, 10};
-const int LED[5][7] = {
-  {1,0,1,0,1,0,1},
-  {0,1,0,1,0,1,0},
-  {1,0,1,0,1,0,1},
-  {0,1,0,1,0,1,0},
-  {1,0,1,0,1,0,1}
+int field[5][7] = {
+  {0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0},
+  {0,0,0,5,0,0,0},
+  {0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0}
 };
 int count = 0;
 
@@ -31,6 +31,7 @@ void setup() {
   pinMode(SEG_SDI, OUTPUT);
   pinMode(SEG_SCK, OUTPUT);
   initDotMatrix();
+  initField(field);
 }
 
 void loop() {
@@ -44,7 +45,7 @@ void loop() {
   delay(0);
   seg(ctoi('F'));
   delay(0);
-  dotMatrix(LED, count);
+  dotMatrix(field, count);
   delay(0);
   noTone(SPEAKER); 
   delayMicroseconds(50);
