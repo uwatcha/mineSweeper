@@ -3,17 +3,47 @@ bool buttonFlag = false;
 void buttonA () {
   if (buttonIsON(BUTTON_A)) {
     Serial.println("a");
+    int selectedRow = selected.getRow();
+    int selectedCol = selected.getCol();
+    int movedRow = selectedRow;
+    int movedCol = selectedCol;
     switch (getMode()) {
       case 1://上
-      break;
+        if (selectedRow!=0) movedRow--;
+        selected = field[movedRow][selectedCol];
+        field[selectedRow][selectedCol].setSelect();
+        field[movedRow][selectedCol].setSelect();
+        break;
       case 2://下
-      break;
+        if (selectedRow!=ROW-1) movedRow++;
+        selected = field[movedRow][selectedCol];
+        field[selectedRow][selectedCol].setSelect();
+        field[movedRow][selectedCol].setSelect();
+        break;
       case 3://左
-      break;
+        if (selectedCol!=COL-1) movedCol++;
+        selected = field[selectedRow][movedCol];
+        field[selectedRow][selectedCol].setSelect();
+        field[selectedRow][movedCol].setSelect();
+        break;
       case 4://右
-      break;
+        if (selectedCol!=0) movedCol--;
+        selected = field[selectedRow][movedCol];
+        field[selectedRow][selectedCol].setSelect();
+        field[selectedRow][movedCol].setSelect();
+        break;
     }
-    delay(200);
+    delay(40);
+    for (int i=0; i<ROW; i++) {
+      for (int j=0; j<COL; j++) {
+        if (field[i][j].getIsSelected()){
+          Serial.print(field[i][j].getRow());
+          Serial.print(" ");
+          Serial.println(field[i][j].getCol());
+        }
+      }
+    }
+    printField(field);
   }
 }
 
@@ -35,12 +65,12 @@ void buttonC () {
 
 bool buttonIsON (uint8_t button) {
   //delay(50);
-  if (digitalRead(button)==LOW && !buttonFlag && millis()%50==0) {
+  if (digitalRead(button)==LOW && !buttonFlag) {
     buttonFlag = true;
     sound(button);
     return 1;
   }
-  else if (digitalRead(button)==LOW && buttonFlag && millis()%50==0) {
+  else if (digitalRead(button)==LOW && buttonFlag) {
     return 0;
   }
   else {

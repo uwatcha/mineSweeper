@@ -21,6 +21,7 @@ const int OPEN   = 2;
 const int SELECT = 3;
 const int FLAG = 4;
 Dot field[ROW][COL];
+Dot selected;
 Dot high;
 int count = 0;
 void initField (Dot (*arrays)[COL]);
@@ -49,6 +50,7 @@ void setup() {
   }
   high = Dot(-1, -1, OPEN);
   field[2][3].setSelect();
+  selected = field[2][3];
   printField(field);
 }
 
@@ -63,5 +65,4 @@ void loop() {
   noTone(SPEAKER); 
   delayMicroseconds(50);
   count = (++count)%5;
-  // printField(field);
 }

@@ -13,6 +13,7 @@ void volume() {
   int mode = getMode();
   if (currentMode != mode || currentMode==-1) {
     if (currentMode != -1) sound(VOLUME);
+    Serial.println(getMode());
     delay(30);
     currentMode = mode;
   }
