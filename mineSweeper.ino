@@ -14,13 +14,18 @@ const uint8_t REG_CLK   = 11;
 const uint8_t MAT[] = {-1, 5, 6, 7, 8, 9, 10};
 const int ROW = 5;
 const int COL = 7;
+const int NUM_PIN_ONESIDE = 6;
+const int CLOSE  = 0;
+const int MINE   = 1;
+const int OPEN   = 2;
+const int SELECT = 3;
+const int FLAG = 4;
 Dot field[ROW][COL];
-Dot high = Dot(0, 0);
-Dot low  = Dot(0, 0);
+Dot high;
 int count = 0;
 void initField (Dot (*arrays)[COL]);
 void dotMatrix (Dot (*arrays)[COL], int count);
-int getSelectedDot (Dot (*arrays)[COL]);
+int  getSelectedDot (Dot (*arrays)[COL]);
 void printField (Dot (*arrays)[7]);
 
 void setup() {
@@ -33,16 +38,18 @@ void setup() {
   pinMode(SEG_LATCH, OUTPUT);
   pinMode(SEG_SDI, OUTPUT);
   pinMode(SEG_SCK, OUTPUT);
+  for (int i=1; i<NUM_PIN_ONESIDE+1; i++) pinMode(MAT[i], OUTPUT);
+  pinMode(REG_SER, OUTPUT);
+  pinMode(REG_LATCH, OUTPUT);
+  pinMode(REG_CLK, OUTPUT);
   // initDotMatrix();
-
   for (int i=0; i<ROW; i++) {
     for (int j=0; j<COL; j++) {
-     field[i][j] = Dot(i, j);
+     field[i][j] = Dot(i, j, CLOSE);
     }
   }
-  high.setOpen();
+  high = Dot(-1, -1, OPEN);
   field[2][3].setSelect();
-  // initField(field);
   printField(field);
 }
 
@@ -52,6 +59,7 @@ void loop() {
   buttonB();
   buttonC();
   seg(ctoi('F'));
+  resetDotMatrix();
   dotMatrix(field, count);
   noTone(SPEAKER); 
   delayMicroseconds(50);

@@ -1,12 +1,10 @@
 #include "Arduino.h"
 #include "Dot.h"
-const int CLOSE  = 0;
-const int MINE   = 1;
-const int OPEN   = 2;
+
 
 Dot::Dot() {}
-Dot::Dot(int _row, int _col) {
-  state = CLOSE;
+Dot::Dot(int _row, int _col, int _state) {
+  state = _state;
   isSelected = false;
   isFlag = false;
   row = _row;
@@ -29,6 +27,14 @@ bool Dot::getIsFlag() {
   return isFlag;
 }
 
+int Dot::getRow() {
+  return row;
+}
+
+int Dot::getCol() {
+  return col;
+}
+
 void Dot::setNumMinesAround(Dot (*arrays)[COL]) {
   if (getState()!=MINE) {
     int result = 0;
@@ -48,10 +54,6 @@ void Dot::setNumMinesAround(Dot (*arrays)[COL]) {
 
 void Dot::setMine() {
   state = MINE;
-}
-
-void Dot::setOpen() {
-  state = OPEN;
 }
 
 void Dot::setSelect() {

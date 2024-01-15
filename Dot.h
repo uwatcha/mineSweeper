@@ -4,7 +4,7 @@ class Dot
 {
 public:
   Dot();
-  Dot(int row, int col);
+  Dot(int _row, int _col, int _state);
   int getState();
   bool getIsSelected();
   bool getIsFlag();
@@ -16,7 +16,6 @@ public:
   void setSelect();
   void setFlag();
   void setNumMinesAround(Dot (*arrays)[7]);
-  void setOpen();
   void setMine();
   int dig();
   void initField(Dot (*arrays)[7]);
@@ -24,6 +23,9 @@ public:
   int *selectValues (int *array, int num);
   int coordinateToNum (int coo);
   int numToCoordinate (int num);
+  void dotMatrix (Dot (*arrays)[7], int count);
+  int write (int pin, Dot dot, bool isAnode);
+  void reg (int b);
 
 private:
   int state;
