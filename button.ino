@@ -1,6 +1,6 @@
 #include "Dot.h"
 bool buttonFlag = false;
-void buttonA () {
+void buttonA (Dot &_selected) {
   if (buttonIsON(BUTTON_A)) {
     Serial.println("a");
     int selectedRow = selected.getRow();
@@ -10,25 +10,25 @@ void buttonA () {
     switch (getMode()) {
       case 1://上
         if (selectedRow!=0) movedRow--;
-        selected = field[movedRow][selectedCol];
+        _selected = field[movedRow][selectedCol];
         field[selectedRow][selectedCol].setSelect();
         field[movedRow][selectedCol].setSelect();
         break;
       case 2://下
         if (selectedRow!=ROW-1) movedRow++;
-        selected = field[movedRow][selectedCol];
+        _selected = field[movedRow][selectedCol];
         field[selectedRow][selectedCol].setSelect();
         field[movedRow][selectedCol].setSelect();
         break;
       case 3://左
         if (selectedCol!=COL-1) movedCol++;
-        selected = field[selectedRow][movedCol];
+        _selected = field[selectedRow][movedCol];
         field[selectedRow][selectedCol].setSelect();
         field[selectedRow][movedCol].setSelect();
         break;
       case 4://右
         if (selectedCol!=0) movedCol--;
-        selected = field[selectedRow][movedCol];
+        _selected = field[selectedRow][movedCol];
         field[selectedRow][selectedCol].setSelect();
         field[selectedRow][movedCol].setSelect();
         break;
@@ -48,7 +48,7 @@ void buttonA () {
 }
 
 
-void buttonB () {
+void buttonB (Dot &_selected) {
   if (buttonIsON(BUTTON_B)) {
     Serial.println("b");
     Serial.println(selected.getState());
@@ -73,7 +73,9 @@ void buttonB () {
 void buttonC () {
   if (buttonIsON(BUTTON_C)) {
     Serial.println("c");
+    selected.setFlag();
     delay(30);
+    printField(field);
   }
 }
 

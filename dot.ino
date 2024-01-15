@@ -61,7 +61,9 @@ void Dot::setSelect() {
 }
 
 void Dot::setFlag() {
-  isFlag = !isFlag;
+  if (getIsSelected()) {
+    isFlag = !isFlag;
+  }
 }
 
 void Dot::dig() {

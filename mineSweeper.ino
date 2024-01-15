@@ -56,8 +56,8 @@ void setup() {
 
 void loop() {
   volume();
-  buttonA();
-  buttonB();
+  buttonA(selected);
+  buttonB(selected);
   buttonC();
   seg(ctoi('F'));
   resetDotMatrix();
