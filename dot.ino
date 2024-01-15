@@ -1,11 +1,10 @@
 #include "Arduino.h"
 #include "Dot.h"
-const int CLOSE  = 0;
-const int MINE   = 1;
-const int OPEN   = 2;
 
-Dot::Dot(int _row, int _col) {
-  state = CLOSE;
+
+Dot::Dot() {}
+Dot::Dot(int _row, int _col, int _state) {
+  state = _state;
   isSelected = false;
   isFlag = false;
   row = _row;
@@ -13,23 +12,31 @@ Dot::Dot(int _row, int _col) {
 }
 
 int Dot::getNumMinesAround() {
-  return this->numMinesAround;
+  return numMinesAround;
 }
 
 int Dot::getState() {
-  return this->state;
+  return state;
 }
 
 bool Dot::getIsSelected() {
-  return this->isSelected;
+  return isSelected;
 }
 
 bool Dot::getIsFlag() {
-  return this->isFlag;
+  return isFlag;
+}
+
+int Dot::getRow() {
+  return row;
+}
+
+int Dot::getCol() {
+  return col;
 }
 
 void Dot::setNumMinesAround(Dot (*arrays)[COL]) {
-  if (this->getState()!=MINE) {
+  if (getState()!=MINE) {
     int result = 0;
     for (int i=-1; i<=1; i++) {
       for (int j=-1; j<=1; j++) {
@@ -38,19 +45,23 @@ void Dot::setNumMinesAround(Dot (*arrays)[COL]) {
         }
       }
     }
-    this->numMinesAround = result;
+    numMinesAround = result;
   }
   else {
-    this->numMinesAround = -1;
+    numMinesAround = -1;
   }
+}
+
+void Dot::setMine() {
+  state = MINE;
 }
 
 void Dot::setSelect() {
-  this->isSelected = !this->isSelected;
+  isSelected = !isSelected;
 }
 
 void Dot::setFlag() {
-  this->isFlag = !this->isFlag;
+  isFlag = !isFlag;
 }
 
 int Dot::dig() {

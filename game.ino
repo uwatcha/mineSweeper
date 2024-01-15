@@ -1,8 +1,9 @@
+#include "Dot.h"
 const int NUM_MINE = 6;
 const int NUM_DOT = 35;
 
-void initField (int (*arrays)[COL]) {
-  //最初に選択しているを乱数テーブルから除く
+void initField (Dot (*arrays)[COL]) {
+  //最初に選択しているドットを乱数テーブルから除く
   int table[NUM_DOT-1];
   int selectedDot = coordinateToNum(getSelectedDot(arrays));
   for (int i=0, j=0; i<NUM_DOT; i++, j++) {
@@ -17,15 +18,17 @@ void initField (int (*arrays)[COL]) {
   //地雷を埋めるドットを決定
   int *mines = selectValues(table, NUM_MINE);
   //----------------------------------------
+  //地雷を配置
   for (int i=0; i<NUM_MINE; i++) {
-    arrays[mines[i]/10][mines[i]%10] = MINE;
+    arrays[mines[i]/10][mines[i]%10].setMine();
   }
+  //----------------------------------------
 }
 
-int getSelectedDot (int (*arrays)[COL]) {
+int getSelectedDot (Dot (*arrays)[COL]) {
   for (int i=0; i<7; i++) {
     for (int j=0; j<7; j++) {
-      if (arrays[i][j]==5) {
+      if (arrays[i][j].getIsSelected()) {
         return i*10+j;
       }
     }

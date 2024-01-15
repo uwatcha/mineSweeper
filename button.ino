@@ -1,3 +1,4 @@
+#include "Dot.h"
 bool buttonFlag = false;
 void buttonA () {
   if (buttonIsON(BUTTON_A)) {
@@ -12,7 +13,7 @@ void buttonA () {
       case 4://右
       break;
     }
-    delay(100);
+    delay(200);
   }
 }
 

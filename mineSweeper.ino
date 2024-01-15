@@ -1,4 +1,5 @@
 #include "ae7seg.h"
+#include "Dot.h"
 const uint8_t SPEAKER   =  2;
 const uint8_t VOLUME    = A2;
 const uint8_t BUTTON_A  = A3;
@@ -13,14 +14,19 @@ const uint8_t REG_CLK   = 11;
 const uint8_t MAT[] = {-1, 5, 6, 7, 8, 9, 10};
 const int ROW = 5;
 const int COL = 7;
-const int field[ROW][COL] = {
-  {0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0},
-  {0,0,0,5,0,0,0},
-  {0,0,0,0,0,0,0},
-  {0,0,0,0,0,0,0}
-};
+const int NUM_PIN_ONESIDE = 6;
+const int CLOSE  = 0;
+const int MINE   = 1;
+const int OPEN   = 2;
+const int SELECT = 3;
+const int FLAG = 4;
+Dot field[ROW][COL];
+Dot high;
 int count = 0;
+void initField (Dot (*arrays)[COL]);
+void dotMatrix (Dot (*arrays)[COL], int count);
+int  getSelectedDot (Dot (*arrays)[COL]);
+void printField (Dot (*arrays)[7]);
 
 void setup() {
   Serial.begin(9600);
@@ -32,24 +38,30 @@ void setup() {
   pinMode(SEG_LATCH, OUTPUT);
   pinMode(SEG_SDI, OUTPUT);
   pinMode(SEG_SCK, OUTPUT);
-  initDotMatrix();
-  initField(field);
+  for (int i=1; i<NUM_PIN_ONESIDE+1; i++) pinMode(MAT[i], OUTPUT);
+  pinMode(REG_SER, OUTPUT);
+  pinMode(REG_LATCH, OUTPUT);
+  pinMode(REG_CLK, OUTPUT);
+  for (int i=0; i<ROW; i++) {
+    for (int j=0; j<COL; j++) {
+     field[i][j] = Dot(i, j, CLOSE);
+    }
+  }
+  high = Dot(-1, -1, OPEN);
+  field[2][3].setSelect();
+  printField(field);
 }
 
 void loop() {
   volume();
-  delay(0);
   buttonA();
-  delay(0);
   buttonB();
-  delay(0);
   buttonC();
-  delay(0);
   seg(ctoi('F'));
-  delay(0);
+  resetDotMatrix();
   dotMatrix(field, count);
-  delay(0);
   noTone(SPEAKER); 
   delayMicroseconds(50);
   count = (++count)%5;
+  // printField(field);
 }
