@@ -11,6 +11,7 @@ public:
   int getRow();
   int getCol();
   int getNumMinesAround();
+  void printField (Dot (*arrays)[7]);
   
   void setSelect();
   void setFlag();

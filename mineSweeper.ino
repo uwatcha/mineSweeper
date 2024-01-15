@@ -21,6 +21,7 @@ int count = 0;
 void initField (Dot (*arrays)[COL]);
 void dotMatrix (Dot (*arrays)[COL], int count);
 int getSelectedDot (Dot (*arrays)[COL]);
+void printField (Dot (*arrays)[7]);
 
 void setup() {
   Serial.begin(9600);
@@ -42,6 +43,7 @@ void setup() {
   high.setOpen();
   low.setOpen();
   initField(field);
+  printField(field);
 }
 
 void loop() {

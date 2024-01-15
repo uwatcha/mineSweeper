@@ -26,7 +26,7 @@ void dotMatrix (Dot (*arrays)[COL], int count) {
   for (int j=0; j<COL; j++) {
     b |= write(CATHODE[j], arrays[count][j]);
   }
-  reg(b); 
+  reg(b);
 }
 
 int write (int pin, Dot dot) {
@@ -106,4 +106,29 @@ void initDotMatrix () {
   digitalWrite(MAT[5], HIGH);
   digitalWrite(MAT[6], HIGH);
   reg(B00110100);
+}
+
+void printField (Dot (*arrays)[COL]) {
+  for (int i=0; i<ROW; i++) {
+    for (int j=0; j<COL; j++) {
+      if (arrays[i][j].getIsSelected()) {
+        Serial.print("SE");
+      }
+      else if (arrays[i][j].getIsFlag()) {
+        Serial.print("FL");
+      }
+      else if (arrays[i][j].getState()==OPEN) {
+        Serial.print("OP");
+      }
+      else if (arrays[i][j].getState()==CLOSE) {
+        Serial.print("CL");
+      }
+      else if (arrays[i][j].getState()==MINE) {
+        Serial.print("MI");
+      }
+      Serial.print(" ");
+    }
+    Serial.println("");
+  }
+  Serial.println("============================");
 }
