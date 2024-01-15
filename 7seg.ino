@@ -1,3 +1,4 @@
+#include "Dot.h"
 const int OFFSET = 55;
 AE7SEGGPIO ae7seg(SEG_LATCH, SEG_SDI, SEG_SCK);
 void seg(int n) {

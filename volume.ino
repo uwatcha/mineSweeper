@@ -1,3 +1,4 @@
+#include "Dot.h"
 int currentMode = -1;
 const int VOLUME_MARGIN = 8;
 const int VOLUME_MIN = 0;

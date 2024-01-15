@@ -1,3 +1,4 @@
+#include "Dot.h"
 bool buttonFlag = false;
 void buttonA () {
   if (buttonIsON(BUTTON_A)) {
