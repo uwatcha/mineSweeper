@@ -3,7 +3,7 @@ const int NUM_MINE = 6;
 const int NUM_DOT = 35;
 
 void initField (Dot (*arrays)[COL]) {
-  //最初に選択しているを乱数テーブルから除く
+  //最初に選択しているドットを乱数テーブルから除く
   int table[NUM_DOT-1];
   int selectedDot = coordinateToNum(getSelectedDot(arrays));
   for (int i=0, j=0; i<NUM_DOT; i++, j++) {

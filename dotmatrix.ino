@@ -12,44 +12,53 @@ const int FLAG = 5;
 void resetDotMatrix () {
   int b = BASE_BIT;
   for (int i=0; i<ROW; i++) {
-    b |= write(ANODE[i], low);
+    b |= write(ANODE[i], low, true);
     for (int j=0; j<COL; j++) {
-      b |= write(CATHODE[j], high);
+      b |= write(CATHODE[j], high, false);
     }
-  }
-  reg(b);
-}
-void dotMatrix (Dot (*arrays)[COL], int count) {
-  resetDotMatrix();
-  int b = BASE_BIT;
-  b |= write(ANODE[count], high);
-  for (int j=0; j<COL; j++) {
-    b |= write(CATHODE[j], arrays[count][j]);
   }
   reg(b);
 }
 
-int write (int pin, Dot dot) {
-  int result;
+void dotMatrix (Dot (*arrays)[COL], int count) {
+  // resetDotMatrix();
+  int b = BASE_BIT;
+  b |= write(ANODE[count], high, true);
+  // Serial.println("set anode");
+  for (int j=0; j<COL; j++) {
+    b |= write(CATHODE[j], arrays[count][j], false);
+  }
+  reg(b);
+}
+//digitalWrite(8, 0);
+int write (int pin, Dot dot, bool isAnode) {
+  int result = B00000000;
   if (isValue(DIRECT, pin)) {
     if (dot.getIsSelected()) {
-      light(MAT[pin], SELECT);
+      if (millis()%1000 <= 499) digitalWrite(pin, 1);
+      else                      digitalWrite(pin, 0);
+      //Serial.println("isSelected");
     }
     else if (dot.getIsFlag()) {
-      light(MAT[pin], FLAG);
+      if (millis()%1000 <= 699) digitalWrite(pin, 1);
+      else                      digitalWrite(pin, 0);
+      //Serial.println("isFlag");
     }
     else if (dot.getState()==OPEN) {
-      light(MAT[pin], OPEN);
+      if (isAnode) digitalWrite(pin, 1);
+      else         digitalWrite(pin, 0);
+      //Serial.println("isOpen");
     }
     return 0;
   }
   else if (isValue(REGISTER, pin)) {
     if (dot.getIsSelected()) {
-      if (millis()%1000 <= 499) result = B10000000;
+      if (millis()%1000 <= 499) result = B00100000;
       else                      result = B00000000;
+      //Serial.println("isSelected");
     }
     else if (dot.getIsFlag()) {
-      if (millis()%1000 <= 699) result = B10000000;
+      if (millis()%1000 <= 699) result = B00100000;
       else                      result = B00000000;
     }
     else if (dot.getState()==OPEN) {
@@ -57,23 +66,27 @@ int write (int pin, Dot dot) {
     }
     else {
       result = B00000000;
-    }
+    }    
     result = result >> (pin-REGISTER_PIN_HEAD);
+    if(!isAnode) {
+      result = ~result&(B11111111);
+    }
+    if (!(pin==1 || pin==3 || pin==10 || pin==7 || pin==8)) Serial.println(result, BIN);
     return result;
   }
 }
 
-void light(uint8_t pin, int mode) {
-  if (mode==SELECT) {
+// void light(uint8_t pin, int mode) {
+//   if (mode==SELECT) {
 
-  }
-  else if (mode==FLAG) {
+//   }
+//   else if (mode==FLAG) {
 
-  }
-  else if (mode==OPEN) {
-    digitalWrite(pin, 0);
-  }
-}
+//   }
+//   else if (mode==OPEN) {
+//     digitalWrite(pin, 0);
+//   }
+// }
 
 void reg (int b) {
   digitalWrite(REG_LATCH, LOW);
@@ -82,11 +95,11 @@ void reg (int b) {
 }
 
 bool isValue (int *array, int value) {
-  int size;
-  if (array==DIRECT || array==REGISTER) size = NUM_PIN_ONESIDE;
-  else if (array==ANODE) size = ROW;
-  else if (array==CATHODE) size = COL;
-  for (int i=0; i<size; i++) {
+  // int size;
+  // if (type==1 || type==-1) size = NUM_PIN_ONESIDE; 
+  // else if (array==ANODE) size = ROW;
+  // else if (array==CATHODE) size = COL;
+  for (int i=0; i<6; i++) {
     if (array[i]==value) {
       return true;
     }

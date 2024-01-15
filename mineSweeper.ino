@@ -33,7 +33,7 @@ void setup() {
   pinMode(SEG_LATCH, OUTPUT);
   pinMode(SEG_SDI, OUTPUT);
   pinMode(SEG_SCK, OUTPUT);
-  initDotMatrix();
+  // initDotMatrix();
 
   for (int i=0; i<ROW; i++) {
     for (int j=0; j<COL; j++) {
@@ -41,8 +41,8 @@ void setup() {
     }
   }
   high.setOpen();
-  low.setOpen();
-  initField(field);
+  field[2][3].setSelect();
+  // initField(field);
   printField(field);
 }
 
@@ -56,4 +56,5 @@ void loop() {
   noTone(SPEAKER); 
   delayMicroseconds(50);
   count = (++count)%5;
+  // printField(field);
 }
