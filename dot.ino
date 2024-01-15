@@ -64,12 +64,18 @@ void Dot::setFlag() {
   isFlag = !isFlag;
 }
 
-int Dot::dig() {
-  if (state==MINE) {
-    return 1;
+void Dot::dig() {
+  if (getIsSelected()) {
+    if (state==MINE) {
+      //return 1;
+    }
+    else if (state==CLOSE) {
+      state=OPEN;
+      Serial.println("--");
+      Serial.println(state);
+      Serial.println("--");
+      //return 0;
+    }
   }
-  else {
-    state=OPEN;
-    return 0;
-  }
+  
 }

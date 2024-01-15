@@ -34,15 +34,15 @@ void buttonA () {
         break;
     }
     delay(40);
-    for (int i=0; i<ROW; i++) {
-      for (int j=0; j<COL; j++) {
-        if (field[i][j].getIsSelected()){
-          Serial.print(field[i][j].getRow());
-          Serial.print(" ");
-          Serial.println(field[i][j].getCol());
-        }
-      }
-    }
+    // for (int i=0; i<ROW; i++) {
+    //   for (int j=0; j<COL; j++) {
+    //     if (field[i][j].getIsSelected()){
+    //       Serial.print(field[i][j].getRow());
+    //       Serial.print(" ");
+    //       Serial.println(field[i][j].getCol());
+    //     }
+    //   }
+    // }
     printField(field);
   }
 }
@@ -51,7 +51,22 @@ void buttonA () {
 void buttonB () {
   if (buttonIsON(BUTTON_B)) {
     Serial.println("b");
+    Serial.println(selected.getState());
+    selected.dig();
+    Serial.println(selected.getState());
     delay(70);
+    Serial.println("===");
+    for (int i=0; i<ROW; i++) {
+      for (int j=0; j<COL; j++) {
+        if (field[i][j].getState()==OPEN){
+          Serial.print(field[i][j].getRow());
+          Serial.print(" ");
+          Serial.println(field[i][j].getCol());
+        }
+      }
+    }
+    Serial.println("===");
+    printField(field);
   }
 }
 

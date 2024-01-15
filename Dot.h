@@ -17,7 +17,7 @@ public:
   void setFlag();
   void setNumMinesAround(Dot (*arrays)[7]);
   void setMine();
-  int dig();
+  void dig();
   void initField(Dot (*arrays)[7]);
   int getSelectedDot (Dot (*arrays)[7]);
   int *selectValues (int *array, int num);
