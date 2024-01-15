@@ -42,7 +42,6 @@ void setup() {
   pinMode(REG_SER, OUTPUT);
   pinMode(REG_LATCH, OUTPUT);
   pinMode(REG_CLK, OUTPUT);
-  // initDotMatrix();
   for (int i=0; i<ROW; i++) {
     for (int j=0; j<COL; j++) {
      field[i][j] = Dot(i, j, CLOSE);
