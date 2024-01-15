@@ -13,7 +13,7 @@ void buttonA () {
       case 4://右
       break;
     }
-    delay(100);
+    delay(200);
   }
 }
 

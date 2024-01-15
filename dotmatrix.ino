@@ -71,7 +71,7 @@ int write (int pin, Dot dot, bool isAnode) {
     if(!isAnode) {
       result = ~result&(B11111111);
     }
-    if (!(pin==1 || pin==3 || pin==10 || pin==7 || pin==8)) Serial.println(result, BIN);
+    //if (!(pin==1 || pin==3 || pin==10 || pin==7 || pin==8)) Serial.println(result, BIN);
     return result;
   }
 }
