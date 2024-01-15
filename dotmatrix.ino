@@ -93,9 +93,8 @@ bool isValue (int *array, int value) {
 }
 
 void printField (Dot (*arrays)[COL]) {
-  Serial.println("");
   for (int i=0; i<ROW; i++) {
-    for (int j=0; j<COL; j++) {
+    for (int j=COL-1; j>=0; j--) {
       if (arrays[i][j].getIsSelected()) {
         Serial.print("SE");
       }
