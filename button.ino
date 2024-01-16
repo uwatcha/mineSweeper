@@ -47,6 +47,7 @@ void buttonA (Dot (*arrays)[COL]) {
 void buttonB (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_B)) {
     Serial.println("b");
+    if(!isInitedField) initField(arrays);
     int selectedRow = findSelectedCoordinate(arrays, ROW);
     int selectedCol = findSelectedCoordinate(arrays, COL);
     arrays[selectedRow][selectedCol].dig();

@@ -3,70 +3,16 @@ const int NUM_MINE = 6;
 const int NUM_DOT = 35;
 
 void initField (Dot (*arrays)[COL]) {
-  //最初に選択しているドットを乱数テーブルから除く
-  int table[NUM_DOT-1];
-  int selectedDot = coordinateToNum(getSelectedDot(arrays));
-  for (int i=0, j=0; i<NUM_DOT; i++, j++) {
-    if (i!=j || selectedDot!=j) {
-      table[i] = numToCoordinate(j);
-    }
-    else {
-      i--;
-    }
-  }
-  //----------------------------------------
-  //地雷を埋めるドットを決定
-  int *mines = selectValues(table, NUM_MINE);
-  //----------------------------------------
-  //地雷を配置
-  for (int i=0; i<NUM_MINE; i++) {
-    arrays[mines[i]/10][mines[i]%10].setMine();
-  }
-  //----------------------------------------
-}
-
-int getSelectedDot (Dot (*arrays)[COL]) {
-  for (int i=0; i<7; i++) {
-    for (int j=0; j<7; j++) {
-      if (arrays[i][j].getIsSelected()) {
-        return i*10+j;
-      }
+  int _count=0;
+  int i;
+  int j;
+  while(_count<NUM_MINE) {
+    i = random(ROW);
+    j = random(COL);
+    if ((arrays[i][j].getState()!=MINE) && !arrays[i][j].getIsSelected()) {
+      arrays[i][j].setMine();
+      _count++;
     }
   }
-  return -1;
-}
-
-int *selectValues (int *array, int num) {
-  srand(static_cast<unsigned>(millis()));
-  int *result;
-  result = new int[num];
-  bool isDuplicate = false;
-  for (int i=0; i<num; i++) {
-    int candidate = array[random(34)];
-    for (int j=0; j<i; j++) {
-      if (candidate==result[j]) {
-        isDuplicate = true;
-        break;
-      }
-    }
-    if (!isDuplicate) {
-      result[i] = candidate;
-    }
-    else {
-      i--;
-      isDuplicate = false;
-    }
-  }
-  return result;
-}
-
-int coordinateToNum (int coo) {
-  int ten = coo/10;
-  int one = coo%10;
-  return 7*ten+one;
-}
-int numToCoordinate (int num) {
-  int ten = num/7;
-  int one = num%7;
-  return 10*ten+one;
+  isInitedField = true;
 }
