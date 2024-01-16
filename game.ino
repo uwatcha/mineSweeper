@@ -6,6 +6,7 @@ void initField (Dot (*arrays)[COL]) {
   int _count=0;
   int i;
   int j;
+  randomSeed(millis());
   while(_count<NUM_MINE) {
     i = random(ROW);
     j = random(COL);
