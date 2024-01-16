@@ -31,7 +31,7 @@ public:
   void buttonB (Dot (*arrays)[7]);
   void buttonC (Dot (*arrays)[7]);
   bool buttonIsON (uint8_t button);
-  Dot *findSelectedDot(Dot (*arrays)[7]);
+  int  findSelectedCoordinate(Dot (*arrays)[7], int hilo);
   //--------------------------------------------
 
 private:

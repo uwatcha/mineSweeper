@@ -78,11 +78,14 @@ void Dot::dig() {
   }  
 }
 
-Dot *findSelectedDot(Dot (*arrays)[COL]) {
+int findSelectedCoordinate(Dot (*arrays)[COL], int hilo) {
   for (int i=0; i<ROW; i++) {
     for (int j=0; j<COL; j++) {
-      if (arrays[i][j].getIsSelected()) return &arrays[i][j];
+      if (arrays[i][j].getIsSelected()) {
+        if (hilo==ROW) return i;
+        else if (hilo==COL) return j;
+      }
     }
   }
-  return NULL;
+  return -1;
 }

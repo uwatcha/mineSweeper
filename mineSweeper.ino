@@ -30,8 +30,7 @@ void printField (Dot (*arrays)[COL]);
 void buttonA (Dot (*arrays)[COL]);
 void buttonB (Dot (*arrays)[COL]);
 void buttonC (Dot (*arrays)[COL]);
-Dot *findSelectedDot(Dot (*arrays)[COL]);
-Dot _selected;
+int findSelectedCoordinate(Dot (*arrays)[COL], int hilo);
 
 void setup() {
   Serial.begin(9600);
