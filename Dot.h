@@ -20,10 +20,6 @@ public:
   void dig();
   //プロトタイプ宣言
   void initField(Dot (*arrays)[7]);
-  int getSelectedDot (Dot (*arrays)[7]);
-  int *selectValues (int *array, int num);
-  int coordinateToNum (int coo);
-  int numToCoordinate (int num);
   void dotMatrix (Dot (*arrays)[7], int count);
   int write (int pin, Dot dot, bool isAnode);
   void reg (int b);
@@ -32,6 +28,7 @@ public:
   void buttonC (Dot (*arrays)[7]);
   bool buttonIsON (uint8_t button);
   int  findSelectedCoordinate(Dot (*arrays)[7], int hilo);
+  void seg(Dot (*arrays)[7]);
   //--------------------------------------------
 
 private:
