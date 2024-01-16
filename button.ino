@@ -1,34 +1,31 @@
 #include "Dot.h"
 bool buttonFlag = false;
-void buttonA (Dot *_selected) {
+void buttonA (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_A)) {
     Serial.println("a");
-    int selectedRow = selected->getRow();
-    int selectedCol = selected->getCol();
+    Dot _selected = *findSelectedDot(arrays);
+    int selectedRow = _selected.getRow();
+    int selectedCol = _selected.getCol();
     int movedRow = selectedRow;
     int movedCol = selectedCol;
     switch (getMode()) {
       case 1://上
         if (selectedRow!=0) movedRow--;
-        _selected = &field[movedRow][selectedCol];
         field[selectedRow][selectedCol].setSelect();
         field[movedRow][selectedCol].setSelect();
         break;
       case 2://下
         if (selectedRow!=ROW-1) movedRow++;
-        _selected = &field[movedRow][selectedCol];
         field[selectedRow][selectedCol].setSelect();
         field[movedRow][selectedCol].setSelect();
         break;
       case 3://左
         if (selectedCol!=COL-1) movedCol++;
-        _selected = &field[selectedRow][movedCol];
         field[selectedRow][selectedCol].setSelect();
         field[selectedRow][movedCol].setSelect();
         break;
       case 4://右
         if (selectedCol!=0) movedCol--;
-        _selected = &field[selectedRow][movedCol];
         field[selectedRow][selectedCol].setSelect();
         field[selectedRow][movedCol].setSelect();
         break;
@@ -48,38 +45,19 @@ void buttonA (Dot *_selected) {
 }
 
 
-void buttonB (Dot *_selected) {
+void buttonB (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_B)) {
     Serial.println("b");
-    Serial.println("===dig前");
-    Serial.println(_selected->getState());
-    Serial.println("===digするドットの座標");
-    Serial.print(_selected->getRow());
-    Serial.print(" ");
-    Serial.println(_selected->getCol());
-    _selected->dig();
-    Serial.println("===dig後");
-    Serial.println(_selected->getState());
     delay(70);
-    Serial.println("===OPENのドット");
-    for (int i=0; i<ROW; i++) {
-      for (int j=0; j<COL; j++) {
-        if (field[i][j].getState()==OPEN){
-          Serial.print(field[i][j].getRow());
-          Serial.print(" ");
-          Serial.println(field[i][j].getCol());
-        }
-      }
-    }
-    Serial.println("===");
     printField(field);
   }
 }
 
-void buttonC (Dot *_selected) {
+void buttonC (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_C)) {
     Serial.println("c");
-    selected->setFlag();
+    Dot _selected = *findSelectedDot(arrays);
+    _selected.setFlag();
     delay(30);
     printField(field);
   }

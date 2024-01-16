@@ -27,10 +27,11 @@ public:
   void dotMatrix (Dot (*arrays)[7], int count);
   int write (int pin, Dot dot, bool isAnode);
   void reg (int b);
-  void buttonA (Dot *_selected);
-  void buttonB (Dot *_selected);
-  void buttonC (Dot *_selected);
+  void buttonA (Dot (*arrays)[7]);
+  void buttonB (Dot (*arrays)[7]);
+  void buttonC (Dot (*arrays)[7]);
   bool buttonIsON (uint8_t button);
+  Dot *findSelectedDot(Dot (*arrays)[7]);
   //--------------------------------------------
 
 private:

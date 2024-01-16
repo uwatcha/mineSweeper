@@ -75,6 +75,14 @@ void Dot::dig() {
       state=OPEN;
       //return 0;
     }
+  }  
+}
+
+Dot *findSelectedDot(Dot (*arrays)[COL]) {
+  for (int i=0; i<ROW; i++) {
+    for (int j=0; j<COL; j++) {
+      if (arrays[i][j].getIsSelected()) return &arrays[i][j];
+    }
   }
-  
+  return NULL;
 }
