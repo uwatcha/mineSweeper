@@ -40,6 +40,7 @@ bool isFinish (Dot (*arrays)[COL]);
 void makeDisplay(Dot (*_clear)[COL], Dot (*_failure)[COL]);
 
 void setup() {
+  miss();
   Serial.begin(9600);
   pinMode(SPEAKER, OUTPUT);
   pinMode(BUTTON_A, INPUT);

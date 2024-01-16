@@ -25,3 +25,66 @@ void sound(uint8_t part) {
     delay(1);  
   }
 }
+
+void fanfare() {
+  tone(SPEAKER, doremi[12]);
+  delay(375/3);
+  noTone(SPEAKER);
+  delay(5);
+  tone(SPEAKER, doremi[12]);
+  delay(375/3);
+  noTone(SPEAKER);
+  delay(5);
+  tone(SPEAKER, doremi[12]);
+  delay(375/3);
+  noTone(SPEAKER);
+  delay(5);
+  tone(SPEAKER, doremi[12]);
+  delay(375);
+  tone(SPEAKER, doremi[8]);
+  delay(375);
+  tone(SPEAKER, doremi[10]);
+  delay(375);
+  tone(SPEAKER, doremi[12]);
+  delay(100);
+  noTone(SPEAKER);
+  delay(150);
+  tone(SPEAKER, doremi[10]);
+  delay(375/3);
+  tone(SPEAKER, doremi[12]);
+  delay(375*2);
+  noTone(SPEAKER);
+  delay(5);
+}
+
+void miss() {
+  tone(SPEAKER, 150);
+  delay(375/2);
+  noTone(SPEAKER);
+  delay(375/2);
+  tone(SPEAKER, 150);
+  delay(375*1.5);
+  noTone(SPEAKER);
+  delay(375*1.5);
+
+  tone(SPEAKER, doremi[17]);
+  delay(375);
+  tone(SPEAKER, doremi[16]);
+  delay(375/2);
+  tone(SPEAKER, doremi[15]);
+  delay(375);
+  tone(SPEAKER, doremi[14]);
+  delay(375/2);
+  tone(SPEAKER, doremi[13]);
+  delay(375);
+  tone(SPEAKER, doremi[8]);
+  delay(375*1.5);
+  tone(SPEAKER, doremi[13]);
+  delay(375/2);
+  tone(SPEAKER, doremi[12]);
+  delay(375*2);
+  noTone(SPEAKER);
+  delay(375);
+  tone(SPEAKER, doremi[24]);
+  delay(375/3);
+}
