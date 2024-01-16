@@ -22,6 +22,8 @@ const int SELECT = 3;
 const int FLAG = 4;
 bool isInitedField = false;
 bool isGameOver = false;
+bool isFinishFanfare = false;
+bool isFinishMiss = false;
 AE7SEGGPIO ae7seg(SEG_LATCH, SEG_SDI, SEG_SCK);
 Dot field[ROW][COL];
 Dot clear[ROW][COL];
@@ -40,7 +42,6 @@ bool isFinish (Dot (*arrays)[COL]);
 void makeDisplay(Dot (*_clear)[COL], Dot (*_failure)[COL]);
 
 void setup() {
-  miss();
   Serial.begin(9600);
   pinMode(SPEAKER, OUTPUT);
   pinMode(BUTTON_A, INPUT);
@@ -69,6 +70,10 @@ void setup() {
 
 void loop() {
   if (isGameOver) {
+    if (!isFinishMiss) {
+      miss();
+      isFinishMiss=true;
+    }
     resetDotMatrix();
     dotMatrix(failure, count);
     ae7seg.beginWrite();
@@ -86,6 +91,10 @@ void loop() {
     noTone(SPEAKER); 
   }
   else if (isFinish(field)){
+    if (!isFinishFanfare) {
+      fanfare();
+      isFinishFanfare=true;
+    }
     resetDotMatrix();
     dotMatrix(clear, count);
     ae7seg.beginWrite();

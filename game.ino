@@ -1,5 +1,5 @@
 #include "Dot.h"
-const int NUM_MINE = 7;
+const int NUM_MINE = 6;
 const int NUM_DOT = 35;
 
 void initField (Dot (*arrays)[COL]) {

@@ -27,6 +27,7 @@ void sound(uint8_t part) {
 }
 
 void fanfare() {
+  delay(500);
   tone(SPEAKER, doremi[12]);
   delay(375/3);
   noTone(SPEAKER);
@@ -54,10 +55,11 @@ void fanfare() {
   tone(SPEAKER, doremi[12]);
   delay(375*2);
   noTone(SPEAKER);
-  delay(5);
+  delay(10);
 }
 
 void miss() {
+  delay(500);
   tone(SPEAKER, 150);
   delay(375/2);
   noTone(SPEAKER);
@@ -86,5 +88,7 @@ void miss() {
   noTone(SPEAKER);
   delay(375);
   tone(SPEAKER, doremi[24]);
-  delay(375/3);
+  delay(375/2);
+  noTone(SPEAKER);
+  delay(10);
 }
