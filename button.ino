@@ -1,29 +1,69 @@
+#include "Dot.h"
 bool buttonFlag = false;
-void buttonA () {
+void buttonA (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_A)) {
+    Serial.println("a");
+    int selectedRow = findSelectedCoordinate(arrays, ROW);
+    int selectedCol = findSelectedCoordinate(arrays, COL);
+    int movedRow = selectedRow;
+    int movedCol = selectedCol;
     switch (getMode()) {
       case 1://上
-      break;
+        if (selectedRow!=0) movedRow--;
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[movedRow][selectedCol].setSelect();
+        break;
       case 2://下
-      break;
+        if (selectedRow!=ROW-1) movedRow++;
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[movedRow][selectedCol].setSelect();
+        break;
       case 3://左
-      break;
+        if (selectedCol!=COL-1) movedCol++;
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[selectedRow][movedCol].setSelect();
+        break;
       case 4://右
-      break;
+        if (selectedCol!=0) movedCol--;
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[selectedRow][movedCol].setSelect();
+        break;
     }
+    delay(40);
+    // for (int i=0; i<ROW; i++) {
+    //   for (int j=0; j<COL; j++) {
+    //     if (field[i][j].getIsSelected()){
+    //       Serial.print(field[i][j].getRow());
+    //       Serial.print(" ");
+    //       Serial.println(field[i][j].getCol());
+    //     }
+    //   }
+    // }
+    printField(field);
   }
 }
 
 
-void buttonB () {
+void buttonB (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_B)) {
-
+    Serial.println("b");
+    if(!isInitedField) initField(arrays);
+    int selectedRow = findSelectedCoordinate(arrays, ROW);
+    int selectedCol = findSelectedCoordinate(arrays, COL);
+    arrays[selectedRow][selectedCol].dig();
+    delay(70);
+    printField(field);
   }
 }
 
-void buttonC () {
+void buttonC (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_C)) {
-
+    Serial.println("c");
+    int selectedRow = findSelectedCoordinate(arrays, ROW);
+    int selectedCol = findSelectedCoordinate(arrays, COL);
+    arrays[selectedRow][selectedCol].setFlag();
+    delay(30);
+    printField(field);
   }
 }
 
