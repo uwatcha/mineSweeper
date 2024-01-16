@@ -73,9 +73,6 @@ void Dot::dig() {
     }
     else if (state==CLOSE) {
       state=OPEN;
-      Serial.println("--");
-      Serial.println(state);
-      Serial.println("--");
       //return 0;
     }
   }

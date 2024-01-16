@@ -27,9 +27,9 @@ public:
   void dotMatrix (Dot (*arrays)[7], int count);
   int write (int pin, Dot dot, bool isAnode);
   void reg (int b);
-  void buttonA (Dot &_selected);
-  void buttonB (Dot &_selected);
-  void buttonC ();
+  void buttonA (Dot *_selected);
+  void buttonB (Dot *_selected);
+  void buttonC (Dot *_selected);
   bool buttonIsON (uint8_t button);
   //--------------------------------------------
 

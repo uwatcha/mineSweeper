@@ -21,7 +21,7 @@ const int OPEN   = 2;
 const int SELECT = 3;
 const int FLAG = 4;
 Dot field[ROW][COL];
-Dot selected;
+Dot *selected;
 Dot high;
 int count = 0;
 void initField (Dot (*arrays)[COL]);
@@ -50,7 +50,7 @@ void setup() {
   }
   high = Dot(-1, -1, OPEN);
   field[2][3].setSelect();
-  selected = field[2][3];
+  selected = &field[2][3];
   printField(field);
 }
 
@@ -58,7 +58,7 @@ void loop() {
   volume();
   buttonA(selected);
   buttonB(selected);
-  buttonC();
+  buttonC(selected);
   seg(ctoi('F'));
   resetDotMatrix();
   dotMatrix(field, count);
