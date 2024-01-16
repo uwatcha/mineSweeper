@@ -56,7 +56,7 @@ void setup() {
 
 void loop() {
   volume();
-  buttonA();
+  buttonA(&selected);
   buttonB();
   buttonC();
   seg(ctoi('F'));

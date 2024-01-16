@@ -1,6 +1,6 @@
 #include "Dot.h"
 bool buttonFlag = false;
-void buttonA () {
+void buttonA (Dot *_selected) {
   if (buttonIsON(BUTTON_A)) {
     Serial.println("a");
     int selectedRow = selected.getRow();
