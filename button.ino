@@ -10,25 +10,25 @@ void buttonA (Dot *_selected) {
     switch (getMode()) {
       case 1://上
         if (selectedRow!=0) movedRow--;
-        selected = field[movedRow][selectedCol];
+        *_selected = field[movedRow][selectedCol];
         field[selectedRow][selectedCol].setSelect();
         field[movedRow][selectedCol].setSelect();
         break;
       case 2://下
         if (selectedRow!=ROW-1) movedRow++;
-        selected = field[movedRow][selectedCol];
+        *_selected = field[movedRow][selectedCol];
         field[selectedRow][selectedCol].setSelect();
         field[movedRow][selectedCol].setSelect();
         break;
       case 3://左
         if (selectedCol!=COL-1) movedCol++;
-        selected = field[selectedRow][movedCol];
+        *_selected = field[selectedRow][movedCol];
         field[selectedRow][selectedCol].setSelect();
         field[selectedRow][movedCol].setSelect();
         break;
       case 4://右
         if (selectedCol!=0) movedCol--;
-        selected = field[selectedRow][movedCol];
+        *_selected = field[selectedRow][movedCol];
         field[selectedRow][selectedCol].setSelect();
         field[selectedRow][movedCol].setSelect();
         break;
