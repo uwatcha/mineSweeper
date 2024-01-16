@@ -1,4 +1,5 @@
 #include "ae7seg.h"
+#include "Dot.h"
 const uint8_t SPEAKER   =  2;
 const uint8_t VOLUME    = A2;
 const uint8_t BUTTON_A  = A3;
@@ -13,14 +14,30 @@ const uint8_t REG_CLK   = 11;
 const uint8_t MAT[] = {-1, 5, 6, 7, 8, 9, 10};
 const int ROW = 5;
 const int COL = 7;
-const int LED[ROW][COL] = {
-  {1,0,1,0,1,0,1},
-  {0,1,0,1,0,1,0},
-  {1,0,1,0,1,0,1},
-  {0,1,0,1,0,1,0},
-  {1,0,1,0,1,0,1}
-};
+const int NUM_PIN_ONESIDE = 6;
+const int CLOSE  = 0;
+const int MINE   = 1;
+const int OPEN   = 2;
+const int SELECT = 3;
+const int FLAG = 4;
+bool isInitedField = false;
+bool isGameOver = false;
+AE7SEGGPIO ae7seg(SEG_LATCH, SEG_SDI, SEG_SCK);
+Dot field[ROW][COL];
+Dot clear[ROW][COL];
+Dot failure[ROW][COL];
+Dot high;
 int count = 0;
+void initField (Dot (*arrays)[COL]);
+void dotMatrix (Dot (*arrays)[COL], int count);
+void printField (Dot (*arrays)[COL]);
+void buttonA (Dot (*arrays)[COL]);
+void buttonB (Dot (*arrays)[COL]);
+void buttonC (Dot (*arrays)[COL]);
+int findSelectedCoordinate(Dot (*arrays)[COL], int hilo);
+void seg(Dot (*arrays)[COL]);
+bool isFinish (Dot (*arrays)[COL]);
+void makeDisplay(Dot (*_clear)[COL], Dot (*_failure)[COL]);
 
 void setup() {
   Serial.begin(9600);
@@ -32,23 +49,48 @@ void setup() {
   pinMode(SEG_LATCH, OUTPUT);
   pinMode(SEG_SDI, OUTPUT);
   pinMode(SEG_SCK, OUTPUT);
-  initDotMatrix();
+  for (int i=1; i<NUM_PIN_ONESIDE+1; i++) pinMode(MAT[i], OUTPUT);
+  pinMode(REG_SER, OUTPUT);
+  pinMode(REG_LATCH, OUTPUT);
+  pinMode(REG_CLK, OUTPUT);
+  for (int i=0; i<ROW; i++) {
+    for (int j=0; j<COL; j++) {
+     field[i][j] = Dot(i, j, CLOSE);
+     clear[i][j] = Dot(i, j, CLOSE);
+     failure[i][j] = Dot(i, j, CLOSE);
+    }
+  }
+  makeDisplay(clear, failure);
+  high = Dot(-1, -1, OPEN);
+  field[2][3].setSelect();
+  printField(field);
 }
 
 void loop() {
-  volume();
-  delay(0);
-  buttonA();
-  delay(0);
-  buttonB();
-  delay(0);
-  buttonC();
-  delay(0);
-  seg(ctoi('F'));
-  delay(0);
-  dotMatrix(LED, count);
-  delay(0);
-  noTone(SPEAKER); 
+  if (isGameOver) {
+    resetDotMatrix();
+    dotMatrix(failure, count);
+    ae7seg.beginWrite();
+    ae7seg.writeNumber(8);
+    ae7seg.endWrite();
+  }
+  else if (!isFinish(field)) {
+    volume();
+    buttonA(field);
+    buttonB(field);
+    buttonC(field);
+    seg(field);
+    resetDotMatrix();
+    dotMatrix(field, count);
+    noTone(SPEAKER); 
+  }
+  else if (isFinish(field)){
+    resetDotMatrix();
+    dotMatrix(clear, count);
+    ae7seg.beginWrite();
+    ae7seg.writeNumber(8);
+    ae7seg.endWrite();
+  }
   delayMicroseconds(50);
   count = (++count)%5;
 }

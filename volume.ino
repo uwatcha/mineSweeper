@@ -1,3 +1,4 @@
+#include "Dot.h"
 int currentMode = -1;
 const int VOLUME_MARGIN = 8;
 const int VOLUME_MIN = 0;
@@ -12,6 +13,8 @@ void volume() {
   int mode = getMode();
   if (currentMode != mode || currentMode==-1) {
     if (currentMode != -1) sound(VOLUME);
+    Serial.println(getMode());
+    delay(30);
     currentMode = mode;
   }
 }
