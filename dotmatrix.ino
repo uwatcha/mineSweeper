@@ -17,6 +17,20 @@ void resetDotMatrix () {
   reg(BASE_BIT);
 }
 
+void makeDisplay(Dot (*_clear)[COL], Dot (*_failure)[COL]) {
+  int _rowC[] = {0, 1, 3, 4, 2, 0, 1, 3, 4, 0, 0, 1, 2, 3, 4, 0};
+  int _colC[] = {0, 0, 0, 0, 1, 2, 2, 2, 2, 4, 5, 5, 5, 5, 5, 6};
+  for (int i=0; i<16; i++) {
+    _clear[_rowC[i]][_colC[i]].setOpen();
+  }
+  int _rowF[] = {0, 1, 2, 3, 4, 0, 4, 0, 1, 2, 3, 4, 0, 2, 3, 4, 0, 4, 0, 1, 2, 3, 4};
+  int _colF[] = {0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6};
+  for (int i=0; i<22; i++) {
+    _failure[_rowF[i]][_colF[i]].setOpen();
+  }
+}
+
+
 void dotMatrix (Dot (*arrays)[COL], int count) {
   int b = BASE_BIT;
   b ^= writeAnode(ANODE[count]);
@@ -41,12 +55,12 @@ int writeAnode (int pin) {
 int writeCathode (int pin, Dot dot) {
   if (isValue(DIRECT, pin)) {
     if (dot.getIsSelected()) {
-      if ((millis()%1500 <= 1399)) digitalWrite(MAT[pin], 0);
-      else                      digitalWrite(MAT[pin], 1);
+      if ((millis()%1000 <= 899)) digitalWrite(MAT[pin], 0);
+      else                        digitalWrite(MAT[pin], 1);
     }
     else if (dot.getIsFlag()) {
-      if (millis()%500 <= 249)  digitalWrite(MAT[pin], 0);
-      else                      digitalWrite(MAT[pin], 1);
+      if (millis()%500 <= 249)    digitalWrite(MAT[pin], 0);
+      else                        digitalWrite(MAT[pin], 1);
     }
     else if (dot.getState()==OPEN) {
       digitalWrite(MAT[pin], 0);
@@ -59,11 +73,11 @@ int writeCathode (int pin, Dot dot) {
   else if (isValue(REGISTER, pin)) {
     int result;
     if (dot.getIsSelected()) {
-      if (millis()%1500 <= 1399) result = B100000;
+      if (millis()%1000 <= 899) result = B100000;
       else                      result = B000000;
     }
     else if (dot.getIsFlag()) {
-      if (millis()%500 <= 249) result = B100000;
+      if (millis()%500 <= 249)  result = B100000;
       else                      result = B000000;
     }
     else if (dot.getState()==OPEN) {
