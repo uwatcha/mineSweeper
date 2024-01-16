@@ -18,6 +18,7 @@ public:
   void setNumMinesAround(Dot (*arrays)[7]);
   void setMine();
   void dig();
+  void setOpen();
   //プロトタイプ宣言
   void initField(Dot (*arrays)[7]);
   void dotMatrix (Dot (*arrays)[7], int count);
@@ -29,6 +30,8 @@ public:
   bool buttonIsON (uint8_t button);
   int  findSelectedCoordinate(Dot (*arrays)[7], int hilo);
   void seg(Dot (*arrays)[7]);
+  bool isFinish (Dot (*arrays)[7]);
+  void makeClearDisplay(Dot (*arrays)[7]);
   //--------------------------------------------
 
 private:

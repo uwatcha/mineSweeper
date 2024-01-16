@@ -66,6 +66,10 @@ void Dot::setFlag() {
   }
 }
 
+void Dot::setOpen() {
+  state = OPEN;
+}
+
 void Dot::dig() {
   if (getIsSelected()) {
     if (state==MINE) {

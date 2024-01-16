@@ -1,5 +1,5 @@
 #include "Dot.h"
-const int NUM_MINE = 6;
+const int NUM_MINE = 34;
 const int NUM_DOT = 35;
 
 void initField (Dot (*arrays)[COL]) {
@@ -21,4 +21,12 @@ void initField (Dot (*arrays)[COL]) {
     }
   }
   isInitedField = true;
+}
+bool isFinish (Dot (*arrays)[COL]) {
+  for (int i=0; i<ROW; i++) {
+    for (int j=0; j<COL; j++) {
+      if (arrays[i][j].getState()==CLOSE) return false;
+    }
+  }
+  return true;
 }

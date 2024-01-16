@@ -17,6 +17,14 @@ void resetDotMatrix () {
   reg(BASE_BIT);
 }
 
+void makeClearDisplay(Dot (*arrays)[COL]) {
+  int _row[] = {0, 1, 3, 4, 2, 0, 1, 3, 4, 0, 0, 1, 2, 3, 4, 0};
+  int _col[] = {0, 0, 0, 0, 1, 2, 2, 2, 2, 4, 5, 5, 5, 5, 5, 6};
+  for (int i=0; i<16; i++) {
+    arrays[_row[i]][_col[i]].setOpen();
+  }
+}
+
 void dotMatrix (Dot (*arrays)[COL], int count) {
   int b = BASE_BIT;
   b ^= writeAnode(ANODE[count]);
