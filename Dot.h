@@ -28,6 +28,7 @@ public:
   void buttonC (Dot (*arrays)[7]);
   bool buttonIsON (uint8_t button);
   int  findSelectedCoordinate(Dot (*arrays)[7], int hilo);
+  void seg(Dot (*arrays)[7]);
   //--------------------------------------------
 
 private:

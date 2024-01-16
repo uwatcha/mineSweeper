@@ -31,6 +31,7 @@ void buttonA (Dot (*arrays)[COL]);
 void buttonB (Dot (*arrays)[COL]);
 void buttonC (Dot (*arrays)[COL]);
 int findSelectedCoordinate(Dot (*arrays)[COL], int hilo);
+void seg(Dot (*arrays)[COL]);
 
 void setup() {
   Serial.begin(9600);
@@ -61,7 +62,7 @@ void loop() {
   buttonA(field);
   buttonB(field);
   buttonC(field);
-  seg(ctoi('F'));
+  seg(field);
   resetDotMatrix();
   dotMatrix(field, count);
   noTone(SPEAKER); 
