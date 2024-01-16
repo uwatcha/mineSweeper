@@ -1,64 +1,68 @@
 #include "Dot.h"
 bool buttonFlag = false;
-void buttonA () {
+void buttonA (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_A)) {
     Serial.println("a");
-    int selectedRow = selected.getRow();
-    int selectedCol = selected.getCol();
+    int selectedRow = findSelectedCoordinate(arrays, ROW);
+    int selectedCol = findSelectedCoordinate(arrays, COL);
     int movedRow = selectedRow;
     int movedCol = selectedCol;
     switch (getMode()) {
       case 1://上
         if (selectedRow!=0) movedRow--;
-        selected = field[movedRow][selectedCol];
-        field[selectedRow][selectedCol].setSelect();
-        field[movedRow][selectedCol].setSelect();
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[movedRow][selectedCol].setSelect();
         break;
       case 2://下
         if (selectedRow!=ROW-1) movedRow++;
-        selected = field[movedRow][selectedCol];
-        field[selectedRow][selectedCol].setSelect();
-        field[movedRow][selectedCol].setSelect();
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[movedRow][selectedCol].setSelect();
         break;
       case 3://左
         if (selectedCol!=COL-1) movedCol++;
-        selected = field[selectedRow][movedCol];
-        field[selectedRow][selectedCol].setSelect();
-        field[selectedRow][movedCol].setSelect();
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[selectedRow][movedCol].setSelect();
         break;
       case 4://右
         if (selectedCol!=0) movedCol--;
-        selected = field[selectedRow][movedCol];
-        field[selectedRow][selectedCol].setSelect();
-        field[selectedRow][movedCol].setSelect();
+        arrays[selectedRow][selectedCol].setSelect();
+        arrays[selectedRow][movedCol].setSelect();
         break;
     }
     delay(40);
-    for (int i=0; i<ROW; i++) {
-      for (int j=0; j<COL; j++) {
-        if (field[i][j].getIsSelected()){
-          Serial.print(field[i][j].getRow());
-          Serial.print(" ");
-          Serial.println(field[i][j].getCol());
-        }
-      }
-    }
+    // for (int i=0; i<ROW; i++) {
+    //   for (int j=0; j<COL; j++) {
+    //     if (field[i][j].getIsSelected()){
+    //       Serial.print(field[i][j].getRow());
+    //       Serial.print(" ");
+    //       Serial.println(field[i][j].getCol());
+    //     }
+    //   }
+    // }
     printField(field);
   }
 }
 
 
-void buttonB () {
+void buttonB (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_B)) {
     Serial.println("b");
+    int selectedRow = findSelectedCoordinate(arrays, ROW);
+    int selectedCol = findSelectedCoordinate(arrays, COL);
+    arrays[selectedRow][selectedCol].dig();
     delay(70);
+    printField(field);
   }
 }
 
-void buttonC () {
+void buttonC (Dot (*arrays)[COL]) {
   if (buttonIsON(BUTTON_C)) {
     Serial.println("c");
+    int selectedRow = findSelectedCoordinate(arrays, ROW);
+    int selectedCol = findSelectedCoordinate(arrays, COL);
+    arrays[selectedRow][selectedCol].setFlag();
     delay(30);
+    printField(field);
   }
 }
 
