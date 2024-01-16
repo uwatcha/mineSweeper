@@ -41,11 +41,11 @@ int writeAnode (int pin) {
 int writeCathode (int pin, Dot dot) {
   if (isValue(DIRECT, pin)) {
     if (dot.getIsSelected()) {
-      if (millis()%1000 <= 499) digitalWrite(MAT[pin], 0);
+      if ((millis()%1500 <= 1399)) digitalWrite(MAT[pin], 0);
       else                      digitalWrite(MAT[pin], 1);
     }
     else if (dot.getIsFlag()) {
-      if (millis()%1000 <= 699) digitalWrite(MAT[pin], 0);
+      if (millis()%500 <= 249)  digitalWrite(MAT[pin], 0);
       else                      digitalWrite(MAT[pin], 1);
     }
     else if (dot.getState()==OPEN) {
@@ -59,11 +59,11 @@ int writeCathode (int pin, Dot dot) {
   else if (isValue(REGISTER, pin)) {
     int result;
     if (dot.getIsSelected()) {
-      if (millis()%1000 <= 499) result = B100000;
+      if (millis()%1500 <= 1399) result = B100000;
       else                      result = B000000;
     }
     else if (dot.getIsFlag()) {
-      if (millis()%1000 <= 699) result = B100000;
+      if (millis()%500 <= 249) result = B100000;
       else                      result = B000000;
     }
     else if (dot.getState()==OPEN) {

@@ -61,15 +61,31 @@ void Dot::setSelect() {
 }
 
 void Dot::setFlag() {
-  isFlag = !isFlag;
+  if (getIsSelected()) {
+    isFlag = !isFlag;
+  }
 }
 
-int Dot::dig() {
-  if (state==MINE) {
-    return 1;
+void Dot::dig() {
+  if (getIsSelected()) {
+    if (state==MINE) {
+      //return 1;
+    }
+    else if (state==CLOSE) {
+      state=OPEN;
+      //return 0;
+    }
+  }  
+}
+
+int findSelectedCoordinate(Dot (*arrays)[COL], int hilo) {
+  for (int i=0; i<ROW; i++) {
+    for (int j=0; j<COL; j++) {
+      if (arrays[i][j].getIsSelected()) {
+        if (hilo==ROW) return i;
+        else if (hilo==COL) return j;
+      }
+    }
   }
-  else {
-    state=OPEN;
-    return 0;
-  }
+  return -1;
 }

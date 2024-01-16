@@ -21,13 +21,16 @@ const int OPEN   = 2;
 const int SELECT = 3;
 const int FLAG = 4;
 Dot field[ROW][COL];
-Dot selected;
 Dot high;
 int count = 0;
 void initField (Dot (*arrays)[COL]);
 void dotMatrix (Dot (*arrays)[COL], int count);
 int  getSelectedDot (Dot (*arrays)[COL]);
-void printField (Dot (*arrays)[7]);
+void printField (Dot (*arrays)[COL]);
+void buttonA (Dot (*arrays)[COL]);
+void buttonB (Dot (*arrays)[COL]);
+void buttonC (Dot (*arrays)[COL]);
+int findSelectedCoordinate(Dot (*arrays)[COL], int hilo);
 
 void setup() {
   Serial.begin(9600);
@@ -50,15 +53,14 @@ void setup() {
   }
   high = Dot(-1, -1, OPEN);
   field[2][3].setSelect();
-  selected = field[2][3];
   printField(field);
 }
 
 void loop() {
   volume();
-  buttonA(&selected);
-  buttonB();
-  buttonC();
+  buttonA(field);
+  buttonB(field);
+  buttonC(field);
   seg(ctoi('F'));
   resetDotMatrix();
   dotMatrix(field, count);
