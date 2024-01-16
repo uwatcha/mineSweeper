@@ -50,7 +50,7 @@ void buttonB (Dot (*arrays)[COL]) {
     if(!isInitedField) initField(arrays);
     int selectedRow = findSelectedCoordinate(arrays, ROW);
     int selectedCol = findSelectedCoordinate(arrays, COL);
-    arrays[selectedRow][selectedCol].dig();
+    isGameOver = arrays[selectedRow][selectedCol].dig();
     delay(70);
     printField(field);
   }

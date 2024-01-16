@@ -70,14 +70,14 @@ void Dot::setOpen() {
   state = OPEN;
 }
 
-void Dot::dig() {
+bool Dot::dig() {
   if (getIsSelected()) {
     if (state==MINE) {
-      //return 1;
+      return true;
     }
     else if (state==CLOSE) {
       state=OPEN;
-      //return 0;
+      return false;
     }
   }  
 }

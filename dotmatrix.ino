@@ -17,13 +17,19 @@ void resetDotMatrix () {
   reg(BASE_BIT);
 }
 
-void makeClearDisplay(Dot (*arrays)[COL]) {
-  int _row[] = {0, 1, 3, 4, 2, 0, 1, 3, 4, 0, 0, 1, 2, 3, 4, 0};
-  int _col[] = {0, 0, 0, 0, 1, 2, 2, 2, 2, 4, 5, 5, 5, 5, 5, 6};
+void makeDisplay(Dot (*_clear)[COL], Dot (*_failure)[COL]) {
+  int _rowC[] = {0, 1, 3, 4, 2, 0, 1, 3, 4, 0, 0, 1, 2, 3, 4, 0};
+  int _colC[] = {0, 0, 0, 0, 1, 2, 2, 2, 2, 4, 5, 5, 5, 5, 5, 6};
   for (int i=0; i<16; i++) {
-    arrays[_row[i]][_col[i]].setOpen();
+    _clear[_rowC[i]][_colC[i]].setOpen();
+  }
+  int _rowF[] = {0, 1, 2, 3, 4, 0, 4, 0, 1, 2, 3, 4, 0, 2, 3, 4, 0, 4, 0, 1, 2, 3, 4};
+  int _colF[] = {0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6};
+  for (int i=0; i<22; i++) {
+    _failure[_rowF[i]][_colF[i]].setOpen();
   }
 }
+
 
 void dotMatrix (Dot (*arrays)[COL], int count) {
   int b = BASE_BIT;

@@ -20,10 +20,12 @@ const int MINE   = 1;
 const int OPEN   = 2;
 const int SELECT = 3;
 const int FLAG = 4;
-AE7SEGGPIO ae7seg(SEG_LATCH, SEG_SDI, SEG_SCK);
 bool isInitedField = false;
+bool isGameOver = false;
+AE7SEGGPIO ae7seg(SEG_LATCH, SEG_SDI, SEG_SCK);
 Dot field[ROW][COL];
 Dot clear[ROW][COL];
+Dot failure[ROW][COL];
 Dot high;
 int count = 0;
 void initField (Dot (*arrays)[COL]);
@@ -35,7 +37,7 @@ void buttonC (Dot (*arrays)[COL]);
 int findSelectedCoordinate(Dot (*arrays)[COL], int hilo);
 void seg(Dot (*arrays)[COL]);
 bool isFinish (Dot (*arrays)[COL]);
-void makeClearDisplay(Dot (*arrays)[COL]);
+void makeDisplay(Dot (*_clear)[COL], Dot (*_failure)[COL]);
 
 void setup() {
   Serial.begin(9600);
@@ -55,16 +57,24 @@ void setup() {
     for (int j=0; j<COL; j++) {
      field[i][j] = Dot(i, j, CLOSE);
      clear[i][j] = Dot(i, j, CLOSE);
+     failure[i][j] = Dot(i, j, CLOSE);
     }
   }
-  makeClearDisplay(clear);
+  makeDisplay(clear, failure);
   high = Dot(-1, -1, OPEN);
   field[2][3].setSelect();
   printField(field);
 }
 
 void loop() {
-  if (!isFinish(field)) {
+  if (isGameOver) {
+    resetDotMatrix();
+    dotMatrix(failure, count);
+    ae7seg.beginWrite();
+    ae7seg.writeNumber(8);
+    ae7seg.endWrite();
+  }
+  else if (!isFinish(field)) {
     volume();
     buttonA(field);
     buttonB(field);
@@ -78,6 +88,7 @@ void loop() {
     resetDotMatrix();
     dotMatrix(clear, count);
     ae7seg.beginWrite();
+    ae7seg.writeNumber(8);
     ae7seg.endWrite();
   }
   delayMicroseconds(50);

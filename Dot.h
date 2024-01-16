@@ -17,7 +17,7 @@ public:
   void setFlag();
   void setNumMinesAround(Dot (*arrays)[7]);
   void setMine();
-  void dig();
+  bool dig();
   void setOpen();
   //プロトタイプ宣言
   void initField(Dot (*arrays)[7]);
@@ -31,7 +31,7 @@ public:
   int  findSelectedCoordinate(Dot (*arrays)[7], int hilo);
   void seg(Dot (*arrays)[7]);
   bool isFinish (Dot (*arrays)[7]);
-  void makeClearDisplay(Dot (*arrays)[7]);
+  void makeDisplay(Dot (*_clear)[7], Dot (*_failure)[7]);
   //--------------------------------------------
 
 private:
